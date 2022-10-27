@@ -4,6 +4,7 @@
  */
 package problema_filosofos;
 
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,16 +13,38 @@ import java.util.logging.Logger;
  * @author usuario
  */
 public class Mesa {
+    //Creamos un array de booleanos con tenedores
     private boolean[] tenedores;
+    //Creamos un semaforo
+    private Semaphore semaforo;
     
-    public Mesa(int numTenedores) {
+    /**
+     * Constructor con argumentos 
+     *
+     * @param numTenedores
+     * @param semaforo
+     */
+    public Mesa(int numTenedores, Semaphore semaforo) {
         this.tenedores = new boolean[numTenedores];
+        this.semaforo = semaforo;
     }
     
+    /**
+     * Funcion para obtener el tenedor de la izquierda
+     *
+     * @param i
+     * @return i
+     */
     public int tenedorIzquierda(int i) {
         return i;
     }
     
+    /**
+     * Funcion para devolver el tenedor derecho
+     *
+     * @param i
+     * @return Devuelve o la ultima posicion del tenendor - 1 si i es 0 o devuelve el anterior
+     */
     public int tenedorDerecha(int i) {
         if (i == 0) {
             return this.tenedores.length - 1;
@@ -30,10 +53,15 @@ public class Mesa {
         }
     }
     
+    /**
+     * Funcion para coger
+     *
+     * @param comensal
+     */
     public synchronized void cogerTenedores(int comensal) {
         while (tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]) {
             try {
-                wait();
+                semaforo.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Mesa.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -42,9 +70,13 @@ public class Mesa {
         }
     }
     
+    /**
+     *
+     * @param comensal
+     */
     public synchronized void dejarTenedores(int comensal) {
         tenedores[tenedorIzquierda(comensal)] = false;
         tenedores[tenedorDerecha(comensal)] = false;
-        notifyAll();    
+        semaforo.release();
     }
 }
