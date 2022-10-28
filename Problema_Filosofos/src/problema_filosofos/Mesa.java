@@ -54,13 +54,14 @@ public class Mesa {
     }
     
     /**
-     * Funcion para coger
+     * Funcion para coger tenedores
      *
      * @param comensal
      */
     public synchronized void cogerTenedores(int comensal) {
         while (tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]) {
             try {
+                //Sección crítica, añadimos el semaforo
                 semaforo.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Mesa.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,6 +72,7 @@ public class Mesa {
     }
     
     /**
+     * Funcion para dejar los tenendores
      *
      * @param comensal
      */

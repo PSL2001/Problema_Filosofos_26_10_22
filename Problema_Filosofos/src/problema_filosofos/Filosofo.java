@@ -4,7 +4,6 @@
  */
 package problema_filosofos;
 
-import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +19,7 @@ public class Filosofo extends Thread {
     private boolean parar = false;
 
     /**
+     * Constructor con argumentos
      *
      * @param mesa
      * @param comensal
@@ -33,7 +33,7 @@ public class Filosofo extends Thread {
     }
     
     /**
-     *
+     * Funcion de pensar. Simula que el filosofo está pensando
      */
     public void pensar() {
         System.out.println("Filosofo " + comensal + " esta pensando");
@@ -45,7 +45,7 @@ public class Filosofo extends Thread {
     }
 
     /**
-     *
+     * Funcion de comer. Simula que el filosofo come
      */
     public void comer() {
         System.out.println("Filosofo " + comensal + " esta comiendo");
@@ -62,7 +62,10 @@ public class Filosofo extends Thread {
     }
     
     /**
-     *
+     * Funcion principal del hilo. Hace en bucle lo siguiente
+     * Primero el filosofo piensa, coge los tenendores
+     * Cuando tiene los tenedores, entonces come
+     * Y por ultimo cuando termina de comer suelta los tenedores y vuelve a pensar
      */
     @Override
     public void run() {
