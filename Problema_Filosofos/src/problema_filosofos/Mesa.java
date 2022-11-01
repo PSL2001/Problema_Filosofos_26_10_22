@@ -61,11 +61,12 @@ public class Mesa {
     public synchronized void cogerTenedores(int comensal) {
         while (tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]) {
             try {
-                //Sección crítica, añadimos el semaforo
+                //Primera parte de la sección crítica, añadimos el semaforo
                 semaforo.acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Mesa.class.getName()).log(Level.SEVERE, null, ex);
             }
+            //Cuando los adquirimos entonces ponemos ambos tenedores a true que significa que el filosofo ya los tiene
             tenedores[tenedorIzquierda(comensal)] = true;
             tenedores[tenedorDerecha(comensal)] = true;
         }
@@ -77,6 +78,8 @@ public class Mesa {
      * @param comensal
      */
     public synchronized void dejarTenedores(int comensal) {
+        //2da parte de la seccion critica para dejar los tenedores
+        //Esta funcion simplemente pone los tenedores a false
         tenedores[tenedorIzquierda(comensal)] = false;
         tenedores[tenedorDerecha(comensal)] = false;
         semaforo.release();

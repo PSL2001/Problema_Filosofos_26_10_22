@@ -49,8 +49,10 @@ public class Filosofo extends Thread {
      */
     public void comer() {
         System.out.println("Filosofo " + comensal + " esta comiendo");
+        //Aumentamos el contador para cada vez que se llama la funcion
         contador++;
         System.out.println("El filosofo " + comensal + " ha comido un total de " + contador + " veces");
+        //Este if es para parar el bucle o si no iria infinitamente cuando llega a 10 se llama a una funcion que hace que pare el hilo
         if (contador == 10) {
             pararComer();
         }
@@ -78,7 +80,9 @@ public class Filosofo extends Thread {
             this.mesa.dejarTenedores(this.indiceComensal);
         }
     }
-
+    /*
+    * Funcion para que el hilo pare 
+    */
     private void pararComer() {
         parar = true;
     }
