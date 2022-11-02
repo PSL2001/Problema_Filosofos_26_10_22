@@ -58,7 +58,7 @@ public class Mesa {
      *
      * @param comensal
      */
-    public synchronized void cogerTenedores(int comensal) {
+    public void cogerTenedores(int comensal) {
         while (tenedores[tenedorIzquierda(comensal)] || tenedores[tenedorDerecha(comensal)]) {
             try {
                 //Primera parte de la sección crítica, añadimos el semaforo
@@ -77,7 +77,7 @@ public class Mesa {
      *
      * @param comensal
      */
-    public synchronized void dejarTenedores(int comensal) {
+    public void dejarTenedores(int comensal) {
         //2da parte de la seccion critica para dejar los tenedores
         //Esta funcion simplemente pone los tenedores a false
         tenedores[tenedorIzquierda(comensal)] = false;
